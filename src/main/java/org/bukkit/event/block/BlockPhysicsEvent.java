@@ -10,7 +10,14 @@ import org.bukkit.event.HandlerList;
  */
 public class BlockPhysicsEvent extends BlockEvent implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
+
+    /**
+    *
+    * @deprecated Magic value
+    */
+    @Deprecated
     private final int changed;
+    private final Material changedMaterial;
     private boolean cancel = false;
 
     /**
@@ -19,8 +26,13 @@ public class BlockPhysicsEvent extends BlockEvent implements Cancellable {
      */
     @Deprecated
     public BlockPhysicsEvent(final Block block, final int changed) {
+        this(block, Material.getMaterial(changed));
+    }
+
+    public BlockPhysicsEvent(final Block block, final Material changed) {
         super(block);
-        this.changed = changed;
+        this.changed = changed.getId();
+        this.changedMaterial = changed;
     }
 
     /**
@@ -40,7 +52,7 @@ public class BlockPhysicsEvent extends BlockEvent implements Cancellable {
      * @return Changed block's type
      */
     public Material getChangedType() {
-        return Material.getMaterial(changed);
+        return changedMaterial;
     }
 
     public boolean isCancelled() {
