@@ -8,6 +8,7 @@ import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.material.MaterialData;
 import org.bukkit.util.StringUtil;
 
 import java.util.ArrayList;
@@ -59,7 +60,7 @@ public class ClearCommand extends VanillaCommand {
             }
 
             int data = args.length >= 3 ? getInteger(sender, args[2], 0) : -1;
-            int count = player.getInventory().clear(id, data);
+            int count = player.getInventory().clear(new MaterialData(id, (byte) data));
 
             Command.broadcastCommandMessage(sender, "Cleared the inventory of " + player.getDisplayName() + ", removing " + count + " items");
         } else if (args.length == 0) {

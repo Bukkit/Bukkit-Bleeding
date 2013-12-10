@@ -1,6 +1,7 @@
 package org.bukkit.inventory;
 
 import org.bukkit.entity.HumanEntity;
+import org.bukkit.material.MaterialData;
 
 /**
  * Includes interface to the 4 armor slots
@@ -113,8 +114,8 @@ public interface PlayerInventory extends Inventory {
     public void setHeldItemSlot(int slot);
 
     /**
-     * Clears all matching items from the inventory. Setting either value to -1 will skip it's check,
-     *  while setting both to -1 will clear all items in your inventory unconditionally.
+     * Clears all matching items from the inventory. Setting either value to -1 will skip its check,
+     * while setting both to -1 will clear all items in your inventory unconditionally.
      *
      * @param id the id of the item you want to clear from the inventory
      * @param data the data of the item you want to clear from the inventory
@@ -123,6 +124,15 @@ public interface PlayerInventory extends Inventory {
      */
     @Deprecated
     public int clear(int id, int data);
+
+    /**
+     * Clears all matching items from the inventory. Setting the parameter to <code>null</code> will
+     * clear all items in your inventory unconditionally.
+     *
+     * @param data the data of the item you want to clear from the inventory
+     * @return The number of items cleared
+     */
+    public int clear(MaterialData data);
 
     public HumanEntity getHolder();
 }
