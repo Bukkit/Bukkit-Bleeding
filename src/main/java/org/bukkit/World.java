@@ -67,6 +67,26 @@ public interface World extends PluginMessageRecipient, Metadatable {
     public int getBlockTypeIdAt(Location location);
 
     /**
+     * Gets the block type at the given coordinates
+     *
+     * @param x X-coordinate of the block
+     * @param y Y-coordinate of the block
+     * @param z Z-coordinate of the block
+     * @return Type of the block at the given coordinates
+     * @see #getBlockAt(int, int, int) Returns a live Block object at the given location
+     */
+    public Material getBlockTypeAt(int x, int y, int z);
+
+    /**
+     * Gets the block type at the given {@link Location}
+     *
+     * @param location Location of the block
+     * @return Type of the block at the given location
+     * @see #getBlockAt(org.bukkit.Location) Returns a live Block object at the given location
+     */
+    public Material getBlockTypeAt(Location location);
+
+    /**
      * Gets the highest non-air coordinate at the given coordinates
      *
      * @param x X-coordinate of the blocks
