@@ -69,4 +69,18 @@ public interface Boat extends Vehicle {
      * @param workOnLand whether boats can work on land
      */
     public void setWorkOnLand(boolean workOnLand);
+
+    /**
+     * Gets a boat's damage.
+     *
+     * @return The damage
+     */
+    public double getDamage();
+
+    /**
+     * Sets a boat's damage.
+     *
+     * @param damage over 40 to "kill" a boat
+     */
+    public void setDamage(double damage);
 }
