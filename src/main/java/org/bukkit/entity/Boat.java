@@ -25,7 +25,10 @@ public interface Boat extends Vehicle {
      * boats. The default is 0.2.
      *
      * @return The rate of deceleration
+     *
+     * @deprecated This function no longer has any effect and is provided only for legacy reasons.
      */
+    @Deprecated
     public double getOccupiedDeceleration();
 
     /**
@@ -34,7 +37,10 @@ public interface Boat extends Vehicle {
      * The default is 0.2.
      *
      * @param rate deceleration rate
+     *
+     * @deprecated This function no longer has any effect and is provided only for legacy reasons.
      */
+    @Deprecated
     public void setOccupiedDeceleration(double rate);
 
     /**
