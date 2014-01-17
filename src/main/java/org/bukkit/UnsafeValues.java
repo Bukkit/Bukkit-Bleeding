@@ -2,6 +2,7 @@ package org.bukkit;
 
 import java.util.List;
 
+import org.bukkit.entity.Entity;
 import org.bukkit.inventory.ItemStack;
 
 /**
@@ -25,9 +26,13 @@ public interface UnsafeValues {
 
     ItemStack modifyItemStack(ItemStack stack, String arguments);
 
+    Entity createEntity(String Item, World world, double x, double y, double z, String arguments) throws Exception;
+
     Statistic getStatisticFromInternalName(String name);
 
     Achievement getAchievementFromInternalName(String name);
 
     List<String> tabCompleteInternalStatisticOrAchievementName(String token, List<String> completions);
+
+    List<String> tabCompleteEntityType(String token, List<String> completions);
 }

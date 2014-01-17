@@ -64,6 +64,7 @@ public class SimpleCommandMap implements CommandMap {
         fallbackCommands.add(new SetWorldSpawnCommand());
         fallbackCommands.add(new SetIdleTimeoutCommand());
         fallbackCommands.add(new AchievementCommand());
+        fallbackCommands.add(new SummonCommand());
     }
 
     public SimpleCommandMap(final Server server) {
