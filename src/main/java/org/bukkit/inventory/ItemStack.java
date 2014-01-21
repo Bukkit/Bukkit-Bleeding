@@ -420,7 +420,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
      *
      * @param ench Enchantment to add
      * @param level Level of the enchantment
-     * @throws IllegalArgumentException if enchantment null, or enchantment is
+     * @throws IllegalArgumentException if enchantment is null or enchantment is
      *     not applicable
      */
     @Utility
@@ -443,9 +443,14 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
      * each element of the map.
      *
      * @param enchantments Enchantments to add
+     * @throws IllegalArgumentException if the specified enchantments is null
+     * @throws IllegalArgumentException if any specific enchantment is null
+     *     <b>Warning</b>: Some enchantments may be added before this
+     *     exception is thrown.
      */
     @Utility
     public void addUnsafeEnchantments(Map<Enchantment, Integer> enchantments) {
+        Validate.notNull(enchantments, "Enchantments cannot be null");
         for (Map.Entry<Enchantment, Integer> entry : enchantments.entrySet()) {
             addUnsafeEnchantment(entry.getKey(), entry.getValue());
         }
@@ -462,8 +467,10 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
      *
      * @param ench Enchantment to add
      * @param level Level of the enchantment
+     * @throws IllegalArgumentException if enchantment is null
      */
     public void addUnsafeEnchantment(Enchantment ench, int level) {
+        Validate.notNull(ench, "Enchantment cannot be null");
         (meta == null ? meta = Bukkit.getItemFactory().getItemMeta(getType0()) : meta).addEnchant(ench, level, true);
     }
 
