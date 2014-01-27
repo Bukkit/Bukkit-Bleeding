@@ -4,6 +4,7 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.material.MaterialData;
 
 /**
  * Called when an {@link Entity} breaks a door
@@ -12,7 +13,7 @@ import org.bukkit.entity.LivingEntity;
  */
 public class EntityBreakDoorEvent extends EntityChangeBlockEvent {
     public EntityBreakDoorEvent(final LivingEntity entity, final Block targetBlock) {
-        super(entity, targetBlock, Material.AIR, (byte) 0);
+        super(entity, targetBlock, new MaterialData(Material.AIR));
     }
 
     @Override
