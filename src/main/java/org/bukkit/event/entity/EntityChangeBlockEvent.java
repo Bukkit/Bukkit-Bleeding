@@ -6,6 +6,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
+import org.bukkit.material.MaterialData;
 
 /**
  * Called when any Entity, excluding players, changes a block.
@@ -13,9 +14,15 @@ import org.bukkit.event.HandlerList;
 public class EntityChangeBlockEvent extends EntityEvent implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
     private final Block block;
-    private boolean cancel;
+    private boolean cancel = false;
     private final Material to;
+    /**
+     *
+     * @deprecated Magic value
+     */
+    @Deprecated
     private final byte data;
+    private final MaterialData materialData;
 
     /**
      *
@@ -26,7 +33,7 @@ public class EntityChangeBlockEvent extends EntityEvent implements Cancellable {
      */
     @Deprecated
     public EntityChangeBlockEvent(final LivingEntity what, final Block block, final Material to) {
-        this (what, block, to, (byte) 0);
+        this (what, block, new MaterialData(to));
     }
 
     /**
@@ -39,11 +46,21 @@ public class EntityChangeBlockEvent extends EntityEvent implements Cancellable {
      */
     @Deprecated
     public EntityChangeBlockEvent(final Entity what, final Block block, final Material to, final byte data) {
+        this(what, block, new MaterialData(to, data));
+    }
+
+    /**
+     *
+     * @param what the Entity causing the change
+     * @param block the block (before the change)
+     * @param data the future block MaterialData
+     */
+    public EntityChangeBlockEvent(final Entity what, final Block block, final MaterialData data) {
         super(what);
         this.block = block;
-        this.cancel = false;
-        this.to = to;
-        this.data = data;
+        this.to = data.getItemType();
+        this.data = data.getData();
+        this.materialData = data;
     }
 
     /**
@@ -81,6 +98,15 @@ public class EntityChangeBlockEvent extends EntityEvent implements Cancellable {
     @Deprecated
     public byte getData() {
         return data;
+    }
+
+    /**
+     * Gets the MaterialData that the block is changing into
+     *
+     * @return the MaterialData that the block is changing into
+     */
+    public MaterialData getMaterialData() {
+        return materialData;
     }
 
     @Override
