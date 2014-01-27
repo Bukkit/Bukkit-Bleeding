@@ -13,6 +13,7 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.*;
 import org.bukkit.generator.BlockPopulator;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.material.MaterialData;
 import org.bukkit.metadata.Metadatable;
 import org.bukkit.plugin.messaging.PluginMessageRecipient;
 import org.bukkit.util.Vector;
@@ -688,7 +689,9 @@ public interface World extends PluginMessageRecipient, Metadatable {
      * @param data The block data
      * @return The spawned {@link FallingBlock} instance
      * @throws IllegalArgumentException if {@link Location} or {@link Material} are null or {@link Material} is not a block
+     * @deprecated Magic value
      */
+    @Deprecated
     public FallingBlock spawnFallingBlock(Location location, Material material, byte data) throws IllegalArgumentException;
 
     /**
@@ -700,8 +703,20 @@ public interface World extends PluginMessageRecipient, Metadatable {
      * @return The spawned FallingBlock instance
      * @throws IllegalArgumentException if location is null, or blockId is invalid
      * @see #spawnFallingBlock(org.bukkit.Location, org.bukkit.Material, byte)
+     * @deprecated Magic value
      */
+    @Deprecated
     public FallingBlock spawnFallingBlock(Location location, int blockId, byte blockData) throws IllegalArgumentException;
+
+    /**
+     * Spawn a {@link FallingBlock} entity at the given {@link Location} with the specified MaterialData)
+     *
+     * @param location The {@link Location} to spawn the FallingBlock
+     * @param data The block MaterialData
+     * @return The spawned FallingBlock instance
+     * @throws IllegalArgumentException if location is null, or data is invalid
+     */
+    public FallingBlock spawnFallingBlock(Location location, MaterialData data) throws IllegalArgumentException;
 
     /**
      * Plays an effect to all players within a default radius around a given location.

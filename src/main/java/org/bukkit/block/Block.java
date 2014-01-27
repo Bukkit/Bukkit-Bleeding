@@ -7,6 +7,7 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.material.MaterialData;
 import org.bukkit.metadata.Metadatable;
 
 /**
@@ -214,6 +215,15 @@ public interface Block extends Metadatable {
      */
     @Deprecated
     boolean setTypeIdAndData(int type, byte data, boolean applyPhysics);
+
+    /**
+     * Sets the type and data of this block
+     *
+     * @param data The MaterialData value to change this block to
+     * @param applyPhysics False to cancel physics on the changed block
+     * @return whether the block was changed
+     */
+    boolean setData(MaterialData data, boolean applyPhysics);
 
     /**
      * Gets the face relation of this block compared to the given block

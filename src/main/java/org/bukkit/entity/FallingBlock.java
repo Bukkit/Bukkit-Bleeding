@@ -1,6 +1,7 @@
 package org.bukkit.entity;
 
 import org.bukkit.Material;
+import org.bukkit.material.MaterialData;
 
 /**
  * Represents a falling block
@@ -31,6 +32,20 @@ public interface FallingBlock extends Entity {
      */
     @Deprecated
     byte getBlockData();
+
+    /**
+     * Get the data for the falling block
+     *
+     * @return data of the block
+     */
+    MaterialData getData();
+
+    /**
+     * Set the data for the falling block
+     *
+     * @param data MaterialData of the block
+     */
+    void setData(MaterialData data);
 
     /**
      * Get if the falling block will break into an item if it cannot be placed
