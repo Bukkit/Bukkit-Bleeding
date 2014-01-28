@@ -24,54 +24,15 @@ public class SimpleCommandMap implements CommandMap {
     protected final Map<String, Command> knownCommands = new HashMap<String, Command>();
     protected final Set<String> aliases = new HashSet<String>();
     private final Server server;
-    protected static final Set<VanillaCommand> fallbackCommands = new HashSet<VanillaCommand>();
+    protected final Set<VanillaCommand> fallbackCommands;
 
-    static {
-        fallbackCommands.add(new ListCommand());
-        fallbackCommands.add(new OpCommand());
-        fallbackCommands.add(new DeopCommand());
-        fallbackCommands.add(new BanIpCommand());
-        fallbackCommands.add(new PardonIpCommand());
-        fallbackCommands.add(new BanCommand());
-        fallbackCommands.add(new PardonCommand());
-        fallbackCommands.add(new KickCommand());
-        fallbackCommands.add(new TeleportCommand());
-        fallbackCommands.add(new GiveCommand());
-        fallbackCommands.add(new TimeCommand());
-        fallbackCommands.add(new SayCommand());
-        fallbackCommands.add(new WhitelistCommand());
-        fallbackCommands.add(new TellCommand());
-        fallbackCommands.add(new MeCommand());
-        fallbackCommands.add(new KillCommand());
-        fallbackCommands.add(new GameModeCommand());
-        fallbackCommands.add(new HelpCommand());
-        fallbackCommands.add(new ExpCommand());
-        fallbackCommands.add(new ToggleDownfallCommand());
-        fallbackCommands.add(new BanListCommand());
-        fallbackCommands.add(new DefaultGameModeCommand());
-        fallbackCommands.add(new SeedCommand());
-        fallbackCommands.add(new DifficultyCommand());
-        fallbackCommands.add(new WeatherCommand());
-        fallbackCommands.add(new SpawnpointCommand());
-        fallbackCommands.add(new ClearCommand());
-        fallbackCommands.add(new GameRuleCommand());
-        fallbackCommands.add(new EnchantCommand());
-        fallbackCommands.add(new TestForCommand());
-        fallbackCommands.add(new EffectCommand());
-        fallbackCommands.add(new ScoreboardCommand());
-        fallbackCommands.add(new PlaySoundCommand());
-        fallbackCommands.add(new SpreadPlayersCommand());
-        fallbackCommands.add(new SetWorldSpawnCommand());
-        fallbackCommands.add(new SetIdleTimeoutCommand());
-        fallbackCommands.add(new AchievementCommand());
-    }
-
-    public SimpleCommandMap(final Server server) {
+    public SimpleCommandMap(final Server server, Set<VanillaCommand> vanillaCommands) {
         this.server = server;
-        setDefaultCommands(server);
+        fallbackCommands = vanillaCommands;
+        setDefaultCommands();
     }
 
-    private void setDefaultCommands(final Server server) {
+    private void setDefaultCommands() {
         register("bukkit", new SaveCommand());
         register("bukkit", new SaveOnCommand());
         register("bukkit", new SaveOffCommand());
@@ -213,7 +174,7 @@ public class SimpleCommandMap implements CommandMap {
         }
         knownCommands.clear();
         aliases.clear();
-        setDefaultCommands(server);
+        setDefaultCommands();
     }
 
     public Command getCommand(String name) {

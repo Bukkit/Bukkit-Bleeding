@@ -76,7 +76,7 @@ public class TestServer implements InvocationHandler {
             TestServer server = new TestServer();
             Server instance = Proxy.getProxyClass(Server.class.getClassLoader(), Server.class).asSubclass(Server.class).getConstructor(InvocationHandler.class).newInstance(server);
             Bukkit.setServer(instance);
-            server.pluginManager = new SimplePluginManager(instance, new SimpleCommandMap(instance));
+            server.pluginManager = new SimplePluginManager(instance, new SimpleCommandMap(instance, null));
         } catch (Throwable t) {
             throw new Error(t);
         }
