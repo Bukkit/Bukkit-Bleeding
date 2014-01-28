@@ -24,9 +24,16 @@ public class SimpleCommandMap implements CommandMap {
     protected final Map<String, Command> knownCommands = new HashMap<String, Command>();
     protected final Set<String> aliases = new HashSet<String>();
     private final Server server;
-    protected static final Set<VanillaCommand> fallbackCommands = new HashSet<VanillaCommand>();
+    protected final Set<VanillaCommand> fallbackCommands;
 
-    static {
+    public SimpleCommandMap(final Server server) {
+        this.server = server;
+        this.fallbackCommands = new HashSet<VanillaCommand>();
+        setDefaultCommands();
+    }
+
+    protected void setDefaultCommands() {
+        fallbackCommands.clear();
         fallbackCommands.add(new ListCommand());
         fallbackCommands.add(new OpCommand());
         fallbackCommands.add(new DeopCommand());
@@ -64,14 +71,6 @@ public class SimpleCommandMap implements CommandMap {
         fallbackCommands.add(new SetWorldSpawnCommand());
         fallbackCommands.add(new SetIdleTimeoutCommand());
         fallbackCommands.add(new AchievementCommand());
-    }
-
-    public SimpleCommandMap(final Server server) {
-        this.server = server;
-        setDefaultCommands(server);
-    }
-
-    private void setDefaultCommands(final Server server) {
         register("bukkit", new SaveCommand());
         register("bukkit", new SaveOnCommand());
         register("bukkit", new SaveOffCommand());
@@ -213,7 +212,7 @@ public class SimpleCommandMap implements CommandMap {
         }
         knownCommands.clear();
         aliases.clear();
-        setDefaultCommands(server);
+        setDefaultCommands();
     }
 
     public Command getCommand(String name) {
