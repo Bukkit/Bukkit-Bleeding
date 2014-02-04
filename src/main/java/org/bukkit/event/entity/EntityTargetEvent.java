@@ -98,9 +98,6 @@ public class EntityTargetEvent extends EntityEvent implements Cancellable {
         PIG_ZOMBIE_TARGET,
         /**
          * When the target is forgotten for whatever reason.
-         * <p>
-         * Currently only occurs in with spiders when there is a high
-         * brightness.
          */
         FORGOT_TARGET,
         /**
@@ -121,6 +118,18 @@ public class EntityTargetEvent extends EntityEvent implements Cancellable {
          * When an entity selects a target while defending a village.
          */
         DEFEND_VILLAGE,
+        /**
+         * When an entity is lured into following another entity.
+         */
+        LURED,
+        /**
+         * When an entity begins following another entity.
+         */
+        FOLLOW,
+        /**
+         * When an iron golem offers a flower to a villager.
+         */
+        OFFER_FLOWER,
         /**
          * For custom calls to the event.
          */
