@@ -95,6 +95,7 @@ public class EntityTargetEvent extends EntityEvent implements Cancellable {
          * When the target attacks a fellow pig zombie, so the whole group
          * will target him with this reason.
          */
+        @Deprecated
         PIG_ZOMBIE_TARGET,
         /**
          * When the target is forgotten for whatever reason.
@@ -106,7 +107,7 @@ public class EntityTargetEvent extends EntityEvent implements Cancellable {
          */
         TARGET_ATTACKED_OWNER,
         /**
-         * When the owner of the entity attacks the target attacks, so the
+         * When the owner of the entity attacks the target, so the
          * entity targets it.
          */
         OWNER_ATTACKED_TARGET,
@@ -130,6 +131,11 @@ public class EntityTargetEvent extends EntityEvent implements Cancellable {
          * When an iron golem offers a flower to a villager.
          */
         OFFER_FLOWER,
+        /**
+         * When the target attacks an entity in the horde, so the whole horde
+         * targets it.
+         */
+        TARGET_ATTACKED_HORDE,
         /**
          * For custom calls to the event.
          */
