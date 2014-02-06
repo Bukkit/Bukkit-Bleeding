@@ -72,6 +72,11 @@ public class PortalCreateEvent extends WorldEvent implements Cancellable {
          * When a portal is created as a destination for an existing portal
          * when using the custom PortalTravelAgent
          */
-        OBC_DESTINATION
+        OBC_DESTINATION,
+        /**
+         * When a portal is created 'traditionally' due to having all Ender Eyes
+         * placed.
+         */
+        PLACED_ENDER_EYE
     }
 }
