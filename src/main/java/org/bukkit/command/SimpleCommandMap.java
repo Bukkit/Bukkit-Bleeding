@@ -103,11 +103,12 @@ public class SimpleCommandMap implements CommandMap {
      * {@inheritDoc}
      */
     public boolean register(String label, String fallbackPrefix, Command command) {
-        boolean registeredPassedLabel = register(label, fallbackPrefix, command, false);
+        boolean registeredPassedLabel = register(label, command, false);
+        knownCommands.put(fallbackPrefix + ":" + label, command);
 
         Iterator<String> iterator = command.getAliases().iterator();
         while (iterator.hasNext()) {
-            if (!register(iterator.next(), fallbackPrefix, command, true)) {
+            if (!register(iterator.next(), command, true)) {
                 iterator.remove();
             }
         }
@@ -123,8 +124,6 @@ public class SimpleCommandMap implements CommandMap {
      * fallbackPrefix to create a unique name if its not an alias
      *
      * @param label the name of the command, without the '/'-prefix.
-     * @param fallbackPrefix a prefix which is prepended to the command with a
-     *     ':' one or more times to make the command unique
      * @param command the command to register
      * @return true if command was registered with the passed in label, false
      *     otherwise. If isAlias was true a return of false indicates no
@@ -132,7 +131,7 @@ public class SimpleCommandMap implements CommandMap {
      *     indicates the fallbackPrefix was used one or more times to create a
      *     unique name for the command
      */
-    private synchronized boolean register(String label, String fallbackPrefix, Command command, boolean isAlias) {
+    private synchronized boolean register(String label, Command command, boolean isAlias) {
         String lowerLabel = label.trim().toLowerCase();
 
         if (isAlias && knownCommands.containsKey(lowerLabel)) {
@@ -141,13 +140,9 @@ public class SimpleCommandMap implements CommandMap {
             return false;
         }
 
-        String lowerPrefix = fallbackPrefix.trim().toLowerCase();
-        boolean registerdPassedLabel = true;
-
-        // If the command exists but is an alias we overwrite it, otherwise we rename it based on the fallbackPrefix
-        while (knownCommands.containsKey(lowerLabel) && !aliases.contains(lowerLabel)) {
-            lowerLabel = lowerPrefix + ":" + lowerLabel;
-            registerdPassedLabel = false;
+        // If the command exists but is an alias we overwrite it
+        if (knownCommands.containsKey(lowerLabel) && !aliases.contains(lowerLabel)) {
+            return false;
         }
 
         if (isAlias) {
@@ -159,7 +154,7 @@ public class SimpleCommandMap implements CommandMap {
         }
         knownCommands.put(lowerLabel, command);
 
-        return registerdPassedLabel;
+        return true;
     }
 
     protected Command getFallback(String label) {

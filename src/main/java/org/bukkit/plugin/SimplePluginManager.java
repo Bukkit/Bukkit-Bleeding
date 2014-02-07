@@ -131,6 +131,11 @@ public final class SimplePluginManager implements PluginManager {
             PluginDescriptionFile description = null;
             try {
                 description = loader.getPluginDescription(file);
+                String name = description.getName();
+                if (name.equalsIgnoreCase("bukkit") || name.equalsIgnoreCase("minecraft") || name.equalsIgnoreCase("mojang")) {
+                    server.getLogger().log(Level.SEVERE, "Could not load '" + file.getPath() + "' in folder '" + directory.getPath() + "': Restricted Name");
+                    continue;
+                }
             } catch (InvalidDescriptionException ex) {
                 server.getLogger().log(Level.SEVERE, "Could not load '" + file.getPath() + "' in folder '" + directory.getPath() + "'", ex);
                 continue;
