@@ -104,7 +104,8 @@ public class SimpleCommandMap implements CommandMap {
      */
     public boolean register(String label, String fallbackPrefix, Command command) {
         boolean registeredPassedLabel = register(label, command, false);
-        knownCommands.put(fallbackPrefix + ":" + label, command);
+        // Register prefixed alias
+        this.register(fallbackPrefix + ":" + label, command, true);
 
         Iterator<String> iterator = command.getAliases().iterator();
         while (iterator.hasNext()) {
