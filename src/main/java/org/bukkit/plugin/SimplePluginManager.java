@@ -342,7 +342,7 @@ public final class SimplePluginManager implements PluginManager {
      * @return Plugin if it exists, otherwise null
      */
     public synchronized Plugin getPlugin(String name) {
-        return lookupNames.get(name);
+        return lookupNames.get(name.replace(' ', '_'));
     }
 
     public synchronized Plugin[] getPlugins() {
