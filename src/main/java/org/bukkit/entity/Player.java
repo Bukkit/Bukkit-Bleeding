@@ -1035,4 +1035,12 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
      * @see Player#setHealthScaled(boolean)
      */
     public double getHealthScale();
+
+    /**
+     * Gets how long this player has been idle.
+     *
+     * @return The amount of time that this player has been idle,
+     *     in milliseconds.
+     */
+    public long getIdleTime();
 }
