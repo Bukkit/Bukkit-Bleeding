@@ -16,6 +16,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.Metadatable;
 import org.bukkit.plugin.messaging.PluginMessageRecipient;
 import org.bukkit.util.Vector;
+import org.bukkit.village.VillageManager;
 
 /**
  * Represents a world, which may contain entities, chunks and blocks
@@ -1150,6 +1151,13 @@ public interface World extends PluginMessageRecipient, Metadatable {
      * @return True if rule exists
      */
     public boolean isGameRule(String rule);
+
+    /**
+     * Get the world's VillageManager
+     *
+     * @return The world's VillageManager
+     */
+    public VillageManager getVillageManager();
 
     /**
      * Represents various map environment types that a world may be
