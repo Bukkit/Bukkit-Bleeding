@@ -10,42 +10,23 @@ import org.bukkit.event.HandlerList;
  * <p>
  * If a Creeper Power event is cancelled, the Creeper will not be powered.
  */
-public class CreeperPowerEvent extends EntityEvent implements Cancellable {
+public class CreeperPowerEvent extends EntityZapEvent {
     private static final HandlerList handlers = new HandlerList();
-    private boolean canceled;
     private final PowerCause cause;
-    private LightningStrike bolt;
 
     public CreeperPowerEvent(final Creeper creeper, final LightningStrike bolt, final PowerCause cause) {
-        this(creeper, cause);
-        this.bolt = bolt;
-    }
-
-    public CreeperPowerEvent(final Creeper creeper, final PowerCause cause) {
-        super(creeper);
+        super(creeper, bolt);
         this.cause = cause;
     }
 
-    public boolean isCancelled() {
-        return canceled;
-    }
-
-    public void setCancelled(boolean cancel) {
-        canceled = cancel;
+    public CreeperPowerEvent(final Creeper creeper, final PowerCause cause) {
+        super(creeper, null);
+        this.cause = cause;
     }
 
     @Override
     public Creeper getEntity() {
         return (Creeper) entity;
-    }
-
-    /**
-     * Gets the lightning bolt which is striking the Creeper.
-     *
-     * @return The Entity for the lightning bolt which is striking the Creeper
-     */
-    public LightningStrike getLightning() {
-        return bolt;
     }
 
     /**
