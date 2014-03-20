@@ -29,11 +29,20 @@ public class PlayerFishEvent extends PlayerEvent implements Cancellable {
         this(player, entity, null, state);
     }
 
+    /**
+     * @deprecated replaced by {@link #PlayerFishEvent(Player, Entity, Fish, State, int)} to include the exp amount.
+     */
+    @Deprecated
     public PlayerFishEvent(final Player player, final Entity entity, final Fish hookEntity, final State state) {
+        this(player, entity, hookEntity, state, 0);
+    }
+
+    public PlayerFishEvent(final Player player, final Entity entity, final Fish hookEntity, final State state, int exp) {
         super(player);
         this.entity = entity;
         this.hookEntity = hookEntity;
         this.state = state;
+        this.exp = exp;
     }
 
     /**
