@@ -17,6 +17,8 @@ public interface Prompt extends Cloneable {
     /**
      * Gets the text to display to the user when this prompt is first
      * presented.
+     * <p>
+     * If this message returns null, no prompt will be displayed.
      *
      * @param context Context information about the conversation.
      * @return The text to display.
