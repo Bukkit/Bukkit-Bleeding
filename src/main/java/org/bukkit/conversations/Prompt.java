@@ -12,7 +12,7 @@ public interface Prompt extends Cloneable {
     /**
      * A convenience constant for indicating the end of a conversation.
      */
-    static final Prompt END_OF_CONVERSATION = null;
+    public static final Prompt END_OF_CONVERSATION = null;
 
     /**
      * Gets the text to display to the user when this prompt is first
@@ -21,7 +21,7 @@ public interface Prompt extends Cloneable {
      * @param context Context information about the conversation.
      * @return The text to display.
      */
-    String getPromptText(ConversationContext context);
+    public String getPromptText(ConversationContext context);
 
     /**
      * Checks to see if this prompt implementation should wait for user input
@@ -31,7 +31,7 @@ public interface Prompt extends Cloneable {
      * @return If true, the {@link Conversation} will wait for input before
      *     continuing.
      */
-    boolean blocksForInput(ConversationContext context);
+    public boolean blocksForInput(ConversationContext context);
 
     /**
      * Accepts and processes input from the user. Using the input, the next
@@ -41,5 +41,5 @@ public interface Prompt extends Cloneable {
      * @param input The input text from the user.
      * @return The next Prompt in the prompt graph.
      */
-    Prompt acceptInput(ConversationContext context, String input);
+    public Prompt acceptInput(ConversationContext context, String input);
 }

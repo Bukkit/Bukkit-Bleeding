@@ -35,8 +35,7 @@ public class ConversationFactory {
      *
      * @param plugin The plugin that owns the factory.
      */
-    public ConversationFactory(Plugin plugin)
-    {
+    public ConversationFactory(Plugin plugin) {
         this.plugin = plugin;
         isModal = true;
         localEchoEnabled = true;
@@ -58,8 +57,7 @@ public class ConversationFactory {
      * @param modal The modality of all conversations to be created.
      * @return This object.
      */
-    public ConversationFactory withModality(boolean modal)
-    {
+    public ConversationFactory withModality(boolean modal) {
         isModal = modal;
         return this;
     }
@@ -186,27 +184,27 @@ public class ConversationFactory {
      * @return A new conversation.
      */
     public Conversation buildConversation(Conversable forWhom) {
-        //Abort conversation construction if we aren't supposed to talk to non-players
+        // Abort conversation construction if we aren't supposed to talk to non-players
         if (playerOnlyMessage != null && !(forWhom instanceof Player)) {
             return new Conversation(plugin, forWhom, new NotPlayerMessagePrompt());
         }
 
-        //Clone any initial session data
+        // Clone any initial session data
         Map<Object, Object> copiedInitialSessionData = new HashMap<Object, Object>();
         copiedInitialSessionData.putAll(initialSessionData);
 
-        //Build and return a conversation
+        // Build and return a conversation
         Conversation conversation = new Conversation(plugin, forWhom, firstPrompt, copiedInitialSessionData);
         conversation.setModal(isModal);
         conversation.setLocalEchoEnabled(localEchoEnabled);
         conversation.setPrefix(prefix);
 
-        //Clone the conversation cancellers
+        // Clone the conversation cancellers
         for (ConversationCanceller canceller : cancellers) {
             conversation.addConversationCanceller(canceller.clone());
         }
 
-        //Add the ConversationAbandonedListeners
+        // Add the ConversationAbandonedListeners
         for (ConversationAbandonedListener listener : abandonedListeners) {
             conversation.addConversationAbandonedListener(listener);
         }

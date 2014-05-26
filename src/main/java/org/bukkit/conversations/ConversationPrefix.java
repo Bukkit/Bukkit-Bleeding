@@ -1,7 +1,5 @@
 package org.bukkit.conversations;
 
-import org.bukkit.command.CommandSender;
-
 /**
  * A ConversationPrefix implementation prepends all output from the
  * conversation to the player. The ConversationPrefix can be used to display
@@ -15,5 +13,5 @@ public interface ConversationPrefix {
      * @param context Context information about the conversation.
      * @return The prefix text.
      */
-    String getPrefix(ConversationContext context);
+    public String getPrefix(ConversationContext context);
 }

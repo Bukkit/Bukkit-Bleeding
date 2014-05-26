@@ -217,7 +217,7 @@ public class Conversation {
             }
 
             // Test for conversation abandonment based on input
-            for(ConversationCanceller canceller : cancellers) {
+            for (ConversationCanceller canceller : cancellers) {
                 if (canceller.cancelBasedOnInput(context, input)) {
                     abandon(new ConversationAbandonedEvent(this, canceller));
                     return;
@@ -235,7 +235,7 @@ public class Conversation {
      *
      * @param listener The listener to add.
      */
-    public synchronized void addConversationAbandonedListener(ConversationAbandonedListener listener) {
+    public void addConversationAbandonedListener(ConversationAbandonedListener listener) {
         abandonedListeners.add(listener);
     }
 
@@ -244,7 +244,7 @@ public class Conversation {
      *
      * @param listener The listener to remove.
      */
-    public synchronized void removeConversationAbandonedListener(ConversationAbandonedListener listener) {
+    public void removeConversationAbandonedListener(ConversationAbandonedListener listener) {
         abandonedListeners.remove(listener);
     }
 
@@ -262,7 +262,7 @@ public class Conversation {
      *
      * @param details Details about why the conversation was abandoned
      */
-    public synchronized void abandon(ConversationAbandonedEvent details) {
+    public void abandon(ConversationAbandonedEvent details) {
         if (!abandoned) {
             abandoned = true;
             currentPrompt = null;
