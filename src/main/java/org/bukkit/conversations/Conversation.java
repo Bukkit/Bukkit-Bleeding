@@ -33,6 +33,9 @@ import java.util.logging.Level;
  * <p>
  * You should not construct a conversation manually. Instead, use the {@link
  * ConversationFactory} for access to all available options.
+ * <p>
+ * You should not override Conversation, as it depends on the
+ * ConversationFactory having package-level access to several methods.
  */
 public class Conversation {
 
