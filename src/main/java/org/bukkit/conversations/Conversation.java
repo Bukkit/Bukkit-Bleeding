@@ -1,11 +1,13 @@
 package org.bukkit.conversations;
 
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
 
 /**
  * The Conversation class is responsible for tracking the current state of a
@@ -225,8 +227,12 @@ public class Conversation {
             }
 
             // Not abandoned, output the next prompt
-            currentPrompt = currentPrompt.acceptInput(context, input);
-            outputNextPrompt();
+            try {
+                currentPrompt = currentPrompt.acceptInput(context, input);
+                outputNextPrompt();
+            } catch (Throwable ex) {
+                Bukkit.getLogger().log(Level.SEVERE, "Could not pass conversation input to " + context.getPlugin().getDescription().getFullName(), ex);
+            }
         }
     }
 
@@ -281,7 +287,10 @@ public class Conversation {
         if (currentPrompt == null) {
             abandon(new ConversationAbandonedEvent(this));
         } else {
-            context.getForWhom().sendRawMessage(prefix.getPrefix(context) + currentPrompt.getPromptText(context));
+            String promptText = currentPrompt.getPromptText(context);
+            if (promptText != null) {
+                context.getForWhom().sendRawMessage(prefix.getPrefix(context) + promptText);
+            }
             if (!currentPrompt.blocksForInput(context)) {
                 currentPrompt = currentPrompt.acceptInput(context, null);
                 outputNextPrompt();
