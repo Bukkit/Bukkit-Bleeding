@@ -1,6 +1,7 @@
 package org.bukkit.event.entity;
 
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
 import org.bukkit.util.NumberConversions;
@@ -13,6 +14,10 @@ public class EntityDamageEvent extends EntityEvent implements Cancellable {
     private double damage;
     private boolean cancelled;
     private final DamageCause cause;
+    private double blockingReduction;
+    private double armorReduction;
+    private double magicReduction;
+    private double absorptionReduction;
 
     @Deprecated
     public EntityDamageEvent(final Entity damagee, final DamageCause cause, final int damage) {
@@ -20,9 +25,17 @@ public class EntityDamageEvent extends EntityEvent implements Cancellable {
     }
 
     public EntityDamageEvent(final Entity damagee, final DamageCause cause, final double damage) {
+        this(damagee, cause, damage, 0D, 0D, 0D, 0D);
+    }
+
+    public EntityDamageEvent(final Entity damagee, final DamageCause cause, final double rawDamage, final double blockingReduction, final double armorReduction, final double magicReduction, final double absorptionReduction) {
         super(damagee);
         this.cause = cause;
-        this.damage = damage;
+        this.damage = rawDamage;
+        this.blockingReduction = blockingReduction;
+        this.armorReduction = armorReduction;
+        this.magicReduction = magicReduction;
+        this.absorptionReduction = absorptionReduction;
     }
 
     public boolean isCancelled() {
@@ -34,12 +47,25 @@ public class EntityDamageEvent extends EntityEvent implements Cancellable {
     }
 
     /**
-     * Gets the amount of damage caused by the event
+     * Gets the raw amount of damage caused by the event
      *
-     * @return The amount of damage caused by the event
+     * @return The raw amount of damage caused by the event
      */
     public double getDamage() {
         return damage;
+    }
+
+    /**
+     * Gets the amount of damage caused by the event after all damage
+     * reduction is applied.
+     *
+     * @return the amount of damage caused by the event
+     */
+    public double getFinalDamage() {
+        if (!(getEntity() instanceof LivingEntity)) {
+            return damage;
+        }
+        return damage - blockingReduction - armorReduction - magicReduction - absorptionReduction;
     }
 
     /**
@@ -53,9 +79,9 @@ public class EntityDamageEvent extends EntityEvent implements Cancellable {
     }
 
     /**
-     * Sets the amount of damage caused by the event
+     * Sets the raw amount of damage caused by the event
      *
-     * @param damage The amount of damage caused by the event
+     * @param damage The raw amount of damage caused by the event
      */
     public void setDamage(double damage) {
         this.damage = damage;
@@ -78,6 +104,89 @@ public class EntityDamageEvent extends EntityEvent implements Cancellable {
      */
     public DamageCause getCause() {
         return cause;
+    }
+
+    /**
+     * Gets the damage reduction caused by blocking, typically only present
+     * for Players.
+     *
+     * @return the damage reduction from blocking
+     */
+    public double getBlockingReduction() {
+        return blockingReduction;
+    }
+
+    /**
+     * Sets the damage reduction caused by blocking.
+     *
+     * @param blockingReduction the damage reduction from blocking
+     */
+    public void setBlockingReduction(double blockingReduction) {
+        this.blockingReduction = blockingReduction;
+    }
+
+    /**
+     * Gets the damage reduction caused by wearing armor.
+     *
+     * @return the damage reduction from wearing armor
+     */
+    public double getArmorReduction() {
+        return armorReduction;
+    }
+
+    /**
+     * Sets the damage reduction caused by wearing armor.
+     *
+     * @param armorReduction the damage reduction from wearing armor
+     */
+    public void setArmorReduction(double armorReduction) {
+        this.armorReduction = armorReduction;
+    }
+
+    /**
+     * Gets the damage reduction caused by:
+     * <ul>
+     * <li>
+     * Armor enchantments.
+     * </li>
+     * <li>
+     * Resistance potion effect.
+     * </li>
+     * <li>
+     * Witch's magic resistance.
+     * </li>
+     *
+     * @return the damage reduction from magic sources
+     */
+    public double getMagicReduction() {
+        return magicReduction;
+    }
+
+    /**
+     * Sets the damage reduction caused by magic sources.
+     *
+     * @param magicReduction the damage reduction from magic sources
+     */
+    public void setMagicReduction(double magicReduction) {
+        this.magicReduction = magicReduction;
+    }
+
+    /**
+     * Gets the damage reduction caused by the absorption potion effect.
+     *
+     * @return the damage reduction from absorption potion effect
+     */
+    public double getAbsorptionReduction() {
+        return absorptionReduction;
+    }
+
+    /**
+     * Sets the damage reduction caused by the absorption potion effect.
+     *
+     * @param absorptionReduction the damage reduction from absorption potion effect
+     */
+    public void setAbsorptionReduction(double absorptionReduction) {
+        this.absorptionReduction = absorptionReduction;
     }
 
     @Override

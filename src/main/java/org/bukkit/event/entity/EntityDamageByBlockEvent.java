@@ -15,7 +15,11 @@ public class EntityDamageByBlockEvent extends EntityDamageEvent {
     }
 
     public EntityDamageByBlockEvent(final Block damager, final Entity damagee, final DamageCause cause, final double damage) {
-        super(damagee, cause, damage);
+        this(damager, damagee, cause, damage, 0D, 0D, 0D, 0D);
+    }
+
+    public EntityDamageByBlockEvent(final Block damager, final Entity damagee, final DamageCause cause, final double rawDamage, final double blockingReduction, final double armorReduction, final double magicReduction, final double absorptionReduction) {
+        super(damagee, cause, rawDamage, blockingReduction, armorReduction, magicReduction, absorptionReduction);
         this.damager = damager;
     }
 
