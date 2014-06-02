@@ -175,37 +175,39 @@ public class EntityDamageEvent extends EntityEvent implements Cancellable {
          */
         BASE,
         /**
-         * Gets the damage reduction caused by blocking, only present for
+         * This represents the damage reduced by a wearing a helmet when hit
+         * by a falling block.
+         */
+        HARD_HAT, 
+        /**
+         * This represents  the damage reduction caused by blocking, only present for
          * {@link Player Players}.
          */
         BLOCKING,
-        /**
-         * This is the damage reduction caused by the absorption potion
-         * effect.
-         */
-        ABSORPTION,
-        /**
-         * This is the damage reduction caused by the combination of:
-         * <ul>
-         * <li>
-         *     Armor enchantments
-         * </li><li>
-         *     Resistance potion effect
-         * </li><li>
-         *     Witch's magic resistance
-         * </li>
-         * </ul>
-         */
-        MAGIC,
         /**
          * This is the damage reduction caused by wearing armor.
          */
         ARMOR,
         /**
-         * This represents the damage reduced by a falling block when wearing
-         * a helmet.
+         * This represents the damage reduction caused by the Resistance potion effect.
          */
-        HARD_HAT,
+        RESISTANCE,
+        /**
+         * This represents the damage reduction caused by the combination of:
+         * <ul>
+         * <li>
+         *     Armor enchantments
+         * </li><li>
+         *     Witch's potion resistance
+         * </li>
+         * </ul>
+         */
+        MAGIC,
+        /**
+         * This is the damage reduction caused by the absorption potion
+         * effect.
+         */
+        ABSORPTION,
         ;
     }
 
