@@ -1,5 +1,7 @@
 package org.bukkit.event.entity;
 
+import java.util.Map;
+
 import org.bukkit.entity.Entity;
 
 /**
@@ -13,12 +15,14 @@ public class EntityDamageByEntityEvent extends EntityDamageEvent {
         this(damager, damagee, cause, (double) damage);
     }
 
+    @Deprecated
     public EntityDamageByEntityEvent(final Entity damager, final Entity damagee, final DamageCause cause, final double damage) {
-        this(damager, damagee, cause, damage, 0D, 0D, 0D, 0D);
+        super(damagee, cause, damage);
+        this.damager = damager;
     }
 
-    public EntityDamageByEntityEvent(final Entity damager, final Entity damagee, final DamageCause cause, final double rawDamage, final double blockingReduction, final double armorReduction, final double magicReduction, final double absorptionReduction) {
-        super(damagee, cause, rawDamage, blockingReduction, armorReduction, magicReduction, absorptionReduction);
+    public EntityDamageByEntityEvent(final Entity damager, final Entity damagee, final DamageCause cause, Map<DamageModifier, Double> modifiers) {
+        super(damagee, cause, modifiers);
         this.damager = damager;
     }
 
