@@ -55,7 +55,8 @@ public class EntityDamageEvent extends EntityEvent implements Cancellable {
      * @see #getFinalDamage()
      * @throws IllegalArgumentException if type is null
      * @throws UnsupportedOperationException if the caller does not support
-     *     the particular DamageModifier
+     *     the particular DamageModifier, or to rephrase, when {@link
+     *     #isApplicable(DamageModifier)} returns false
      */
     public void setDamage(DamageModifier type, double damage) throws IllegalArgumentException, UnsupportedOperationException {
         if (!modifiers.containsKey(type)) {
@@ -69,6 +70,7 @@ public class EntityDamageEvent extends EntityEvent implements Cancellable {
      *
      * @return The raw amount of damage caused by the event
      * @throws IllegalArgumentException if type is null
+     * @see DamageModifier#BASE
      */
     public double getDamage(DamageModifier type) throws IllegalArgumentException {
         Validate.notNull(type, "Cannot have null DamageModifier");
@@ -77,9 +79,26 @@ public class EntityDamageEvent extends EntityEvent implements Cancellable {
     }
 
     /**
+     * This checks to see if a particular modifier is valid for this event's
+     * caller, such that, {@link #setDamage(DamageModifier, double)} will not
+     * throw an {@link UnsupportedOperationException}.
+     * <p>
+     * {@link DamageModifier#BASE} is always applicable.
+     *
+     * @param type the modifier
+     * @return true if the modifier is supported by the caller, false otherwise
+     * @throws IllegalArgumentException if type is null
+     */
+    public boolean isApplicable(DamageModifier type) throws IllegalArgumentException {
+        Validate.notNull(type, "Cannot have null DamageModifier");
+        return modifiers.containsKey(type);
+    }
+
+    /**
      * Gets the raw amount of damage caused by the event
      *
      * @return The raw amount of damage caused by the event
+     * @see DamageModifier#BASE
      */
     public double getDamage() {
         return getDamage(DamageModifier.BASE);
@@ -161,11 +180,12 @@ public class EntityDamageEvent extends EntityEvent implements Cancellable {
          */
         BLOCKING,
         /**
-         * Sets the damage reduction caused by the absorption potion effect.
+         * This is the damage reduction caused by the absorption potion
+         * effect.
          */
         ABSORPTION,
         /**
-         * Gets the damage reduction caused by:
+         * This is the damage reduction caused by the combination of:
          * <ul>
          * <li>
          *     Armor enchantments
@@ -178,9 +198,14 @@ public class EntityDamageEvent extends EntityEvent implements Cancellable {
          */
         MAGIC,
         /**
-         * Gets the damage reduction caused by wearing armor.
+         * This is the damage reduction caused by wearing armor.
          */
         ARMOR,
+        /**
+         * This represents the damage reduced by a falling block when wearing
+         * a helmet.
+         */
+        HARD_HAT,
         ;
     }
 
