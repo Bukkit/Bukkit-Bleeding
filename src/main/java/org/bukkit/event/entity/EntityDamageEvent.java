@@ -185,7 +185,7 @@ public class EntityDamageEvent extends EntityEvent implements Cancellable {
          */
         BLOCKING,
         /**
-         * This is the damage reduction caused by wearing armor.
+         * This represents the damage reduction caused by wearing armor.
          */
         ARMOR,
         /**
@@ -204,7 +204,7 @@ public class EntityDamageEvent extends EntityEvent implements Cancellable {
          */
         MAGIC,
         /**
-         * This is the damage reduction caused by the absorption potion
+         * This represents the damage reduction caused by the absorption potion
          * effect.
          */
         ABSORPTION,
