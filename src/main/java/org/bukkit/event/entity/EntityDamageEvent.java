@@ -19,6 +19,7 @@ public class EntityDamageEvent extends EntityEvent implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
     private static final DamageModifier[] MODIFIERS = DamageModifier.values();
     private final Map<DamageModifier, Double> modifiers;
+    private final Map<DamageModifier, Double> originals;
     private boolean cancelled;
     private final DamageCause cause;
 
@@ -36,6 +37,7 @@ public class EntityDamageEvent extends EntityEvent implements Cancellable {
         super(damagee);
         Validate.isTrue(modifiers.containsKey(DamageModifier.BASE), "BASE DamageModifier missing");
         Validate.isTrue(!modifiers.containsKey(null), "Cannot have null DamageModifier");
+        this.originals = new EnumMap<DamageModifier, Double>(modifiers);
         this.cause = cause;
         this.modifiers = modifiers;
     }
@@ -46,6 +48,24 @@ public class EntityDamageEvent extends EntityEvent implements Cancellable {
 
     public void setCancelled(boolean cancel) {
         cancelled = cancel;
+    }
+
+    /**
+     * Gets the original damage for the specified modifier, as defined at this
+     * event's construction.
+     *
+     * @param type the modifier
+     * @throws IllegalArgumentException if type is null
+     */
+    public double getOriginalDamage(DamageModifier type) throws IllegalArgumentException {
+        final Double damage = originals.get(type);
+        if (damage != null) {
+            return damage;
+        }
+        if (type == null) {
+            throw new IllegalArgumentException("Cannot have null DamageModifier");
+        }
+        return 0;
     }
 
     /**
@@ -178,7 +198,7 @@ public class EntityDamageEvent extends EntityEvent implements Cancellable {
          * This represents the damage reduced by a wearing a helmet when hit
          * by a falling block.
          */
-        HARD_HAT, 
+        HARD_HAT,
         /**
          * This represents  the damage reduction caused by blocking, only present for
          * {@link Player Players}.
