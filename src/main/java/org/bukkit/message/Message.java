@@ -84,7 +84,6 @@ public final class Message implements Cloneable {
      * The Message Builder.
      */
     public static final class Builder {
-        // TODO: store messages or builders? - builders allow more mutability
         final List<Message> children = new ArrayList<Message>();
         String message = "";
         ChatColor color;
@@ -293,16 +292,16 @@ public final class Message implements Cloneable {
         }
     }
 
-    List<Message> children;
+    private List<Message> children;
 
-    final String text;
-    final ChatColor color;
-    final boolean bold;
-    final boolean italic;
-    final boolean underline;
-    final boolean obfuscate;
-    final MessageClick click;
-    final MessageHover hover;
+    private final String text;
+    private final ChatColor color;
+    private final boolean bold;
+    private final boolean italic;
+    private final boolean underline;
+    private final boolean obfuscate;
+    private final MessageClick click;
+    private final MessageHover hover;
 
     Message(Builder builder) {
         text = builder.message;
@@ -383,6 +382,14 @@ public final class Message implements Cloneable {
      */
     public List<Message> getChildren() {
         return children;
+    }
+
+    public MessageClick getClickAction() {
+        return click;
+    }
+
+    public MessageHover getHoverAction() {
+        return hover;
     }
 
     @Override

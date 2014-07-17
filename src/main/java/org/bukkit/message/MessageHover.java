@@ -15,7 +15,7 @@ public final class MessageHover implements Cloneable {
 
     public static MessageHover of(Message message) {
         Validate.notNull(message);
-        return of(Type.SHOW_ACHIEVEMENT, message.clone());
+        return of(Type.SHOW_TEXT, message.clone());
     }
 
     public static MessageHover of(Achievement achievement) {
@@ -25,7 +25,7 @@ public final class MessageHover implements Cloneable {
 
     public static MessageHover of(ItemStack item) {
         Validate.notNull(item);
-        return of(Type.SHOW_ACHIEVEMENT, item.clone());
+        return of(Type.SHOW_ITEM ,item.clone());
     }
 
     private static MessageHover of(Type type, Object object) {
@@ -52,7 +52,8 @@ public final class MessageHover implements Cloneable {
     }
 
     public Object getValue() {
-        if (type == Type.SHOW_ITEM) { // We need to return a clone, since items are mutable
+        if (type == Type.SHOW_ITEM) {
+            // We need to return a clone, since items are mutable
             return ((ItemStack) object).clone();
         }
         return object;
@@ -61,6 +62,7 @@ public final class MessageHover implements Cloneable {
     @Override
     public MessageHover clone() {
         try {
+            // No need to hard clone, internals are "safe"
             return (MessageHover) super.clone();
         } catch (CloneNotSupportedException e) {
             throw new Error(e);
